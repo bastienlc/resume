@@ -1,0 +1,8 @@
+en.*
+!en.tex
+!en.pdf
+fr.*
+!fr.tex
+!fr.pdf
+indent.log
+.cache/**
