@@ -1,0 +1,17 @@
+\usepackage{framed}
+\usepackage{xcolor}
+
+\newlength{\leftbarwidth}
+\setlength{\leftbarwidth}{0.8pt}
+\newlength{\leftbarsep}
+\setlength{\leftbarsep}{6pt}
+
+\newcommand*{\leftbarcolorcmd}{\color{highlight}}
+\colorlet{leftbarcolor}{gray}
+
+\renewenvironment{leftbar}{
+    \def\FrameCommand{{\leftbarcolorcmd{\vrule width \leftbarwidth\relax\hspace {\leftbarsep}}}}
+    \MakeFramed {\advance \hsize -\width \FrameRestore }
+}{
+    \endMakeFramed
+}
