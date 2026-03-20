@@ -1,16 +1,51 @@
 \usepackage{framed}
 \usepackage{xcolor}
+\usepackage{tikz}
+
+\newcounter{leftbarinstance}
+\newcounter{leftbarbullet}
 
 \newlength{\leftbarwidth}
-\setlength{\leftbarwidth}{0.8pt}
-\newlength{\leftbarsep}
-\setlength{\leftbarsep}{6pt}
+\setlength{\leftbarwidth}{2pt}
+\newlength{\barleftoffset}
+\setlength{\barleftoffset}{5pt}
+\newlength{\barrightoffset}
+\setlength{\barrightoffset}{15pt}
+\newlength{\leftbarbulletgap}
+\setlength{\leftbarbulletgap}{10pt}
+\newlength{\leftbarbulletradius}
+\setlength{\leftbarbulletradius}{2.4pt}
 
-\newcommand*{\leftbarcolorcmd}{\color{highlight}}
-\colorlet{leftbarcolor}{gray}
+\setlength{\OuterFrameSep}{0pt}
+
+\newcommand*{\leftbarcolorcmd}{\color{leftbarcolor}}
+\colorlet{leftbarcolor}{gray!50}
+
+\newcommand{\subtextbullet}[1]{
+    \stepcounter{leftbarbullet}
+    \edef\leftbarcurrnode{leftbar-\arabic{leftbarinstance}-\arabic{leftbarbullet}}
+    \edef\leftbarprevnode{leftbar-\arabic{leftbarinstance}-\number\numexpr\value{leftbarbullet}-1\relax}
+    \noindent
+    \makebox[0pt][l]{
+        \hspace*{-\dimexpr\barrightoffset+\leftbarwidth/2\relax}
+        \tikz[remember picture, overlay, baseline=0pt]{
+            \coordinate (\leftbarcurrnode) at (0, 0.5ex);
+            \ifnum\value{leftbarbullet}>1
+                \draw[leftbarcolor, line width=\leftbarwidth, line cap=round]
+                ([yshift=-\leftbarbulletgap]\leftbarprevnode) --
+                ([yshift=\leftbarbulletgap]\leftbarcurrnode);
+            \fi
+            \fill[leftbarcolor] (\leftbarcurrnode) circle (\leftbarbulletradius);
+        }
+    }
+    \textit{#1}
+}
 
 \renewenvironment{leftbar}{
-    \def\FrameCommand{{\leftbarcolorcmd{\vrule width \leftbarwidth\relax\hspace {\leftbarsep}}}}
+    \stepcounter{leftbarinstance}
+    \setcounter{leftbarbullet}{0}
+    \def\FrameCommand##1{{\hspace*{\dimexpr\barleftoffset+\barrightoffset+\leftbarwidth\relax}##1}}
+    \renewcommand{\subtext}[1]{\subtextbullet{##1}}
     \MakeFramed {\advance \hsize -\width \FrameRestore }
 }{
     \endMakeFramed

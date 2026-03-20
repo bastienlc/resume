@@ -1,2 +1,2 @@
 pdf:
-	latex en.tex && latex fr.tex
+	latexmk en.tex && latexmk fr.tex

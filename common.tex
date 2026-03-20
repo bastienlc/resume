@@ -4,9 +4,37 @@
 \def\website{bastienlc.github.io}
 \def\LinkedIn{bastien-le-chenadec}
 
-\input{header}
+% Header
 
-\input{\lang/sections/introduction}
+\pagestyle{fancy}
+\lhead{
+    \begin{minipage}[t]{13.5cm}
+        \vspace{0pt}
+        {\Large \name}\par\medskip
+        \input{\lang/sections/introduction}
+    \end{minipage}
+}
+
+\chead{
+}
+\rhead{
+    \begin{minipage}[t]{5.5cm}
+        \vspace{0pt}
+        \raggedleft
+        \href{https://www.linkedin.com/in/\LinkedIn}{linkedin.com/in/\LinkedIn}\\
+        \href{mailto:\email}{\email}\\
+        \href{https://github.com/\Github}{github.com/\Github}\\
+        \href{https://\website}{\website}
+    \end{minipage}
+}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrule}{\hbox to\headwidth{
+        \color{highlight}\leaders\hrule height \headrulewidth\hfill}
+}
+
+\setlength{\headheight}{72pt}
+\setlength{\headsep}{12pt}
 
 \input{\lang/sections/education}
 
